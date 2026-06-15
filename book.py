@@ -36,3 +36,4 @@ class Catalog(BookSearch):
     def get_info(self): pass
     def get_info(self): pass
     def get_description(self): pass
+    def get_description(self): pass
