@@ -34,6 +34,4 @@ class Catalog(BookSearch):
     def findBooksByTitle(self, title: str):
         return [b for b in self.books if title.lower() in b.title.lower()]
     def get_info(self): pass
-    def get_info(self): pass
-    def get_description(self): pass
     def get_description(self): pass
