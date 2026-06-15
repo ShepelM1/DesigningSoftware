@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+*.egg-info/
+
+# Тестування та покриття
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Конфігурація (секрети)
+.env
+*.local
+
+# Файли IDE
+.vscode/
+.idea/
+*.swp
