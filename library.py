@@ -67,7 +67,11 @@ class LibraryManager(BorrowingService):
         return self.catalog.findBooksByTitle(title)
 
     def getOverdueBorrowings(self, currentDate: date):
-        return [b for b in self.borrowings if b.status == "active" and b.dueDate < currentDate]
+        return [
+            b
+            for b in self.borrowings
+            if b.status == "active" and b.dueDate < currentDate
+        ]
 
     # Інтерфейс BorrowingService
     def processBorrowing(self, reader: Reader, book: Book):
@@ -79,7 +83,7 @@ class LibraryManager(BorrowingService):
                 reader,
                 book,
                 date.today(),
-                date.today()
+                date.today(),
             )
 
             self.borrowings.append(borrowing)
@@ -94,6 +98,9 @@ class LibraryManager(BorrowingService):
             if b.id == borrowingId and b.status == "active":
                 b.markAsReturned()
                 b.book.availableCopies += 1
-                self.notify(f"Книга '{b.book.title}' повернена читачем {b.reader.fullName}")
+                self.notify(
+                    f"Книга '{b.book.title}' повернена читачем "
+                    f"{b.reader.fullName}"
+                )
                 return True
         return False

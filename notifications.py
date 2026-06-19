@@ -19,11 +19,11 @@ class NotificationScheduler(Notifier):
         messages = []
         for b in overdue:
             msg = (
-                f"Прострочено: '{b.book.title}' (ID:{b.book.id}) - читач: {b.reader.fullName}, "
-                f"термін: {b.dueDate}"
+                f"Прострочено: '{b.book.title}' (ID:{b.book.id}) - читач: "
+                f"{b.reader.fullName}, термін: {b.dueDate}"
             )
             self.notificationLog.append(msg)
-            
+
             if hasattr(b.reader, 'notify'):
                 try:
                     b.reader.notify(msg)

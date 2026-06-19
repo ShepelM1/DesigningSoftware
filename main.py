@@ -76,7 +76,7 @@ def main():
     overdue = librarian.track_overdue(library, date.today())
     print(f"Прострочених книг: {len(overdue)}")
 
-    
+
 
 
 if __name__ == "__main__":

@@ -1,7 +1,16 @@
 from interfaces import BookSearch
 
+
 class Book:
-    def __init__(self, id: int, title: str, author: str, year: int, isbn: str, totalCopies: int):
+    def __init__(
+        self,
+        id: int,
+        title: str,
+        author: str,
+        year: int,
+        isbn: str,
+        totalCopies: int,
+    ):
         self.id = id
         self.title = title
         self.author = author
@@ -33,5 +42,9 @@ class Catalog(BookSearch):
 
     def findBooksByTitle(self, title: str):
         return [b for b in self.books if title.lower() in b.title.lower()]
-    def get_info(self): pass
-    def get_description(self): pass
+
+    def get_info(self):
+        pass
+
+    def get_description(self):
+        pass

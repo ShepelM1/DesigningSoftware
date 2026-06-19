@@ -25,7 +25,13 @@ class TestBook(unittest.TestCase):
         self.library.addBook(self.book)
 
         # Читач
-        self.reader = Reader(1, "Shepel Mykola", "user@example.com", "+380000000000", "вул. Соборна")
+        self.reader = Reader(
+            1,
+            "Shepel Mykola",
+            "user@example.com",
+            "+380000000000",
+            "вул. Соборна",
+        )
 
     def test_initial_state(self):
         self.assertEqual(self.book.availableCopies, self.book.totalCopies)

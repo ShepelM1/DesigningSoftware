@@ -10,18 +10,40 @@ class User:
         self.phone = phone
 
 class Librarian(User):
-    def __init__(self, id: int, fullName: str, email: str, phone: str, employeeNumber: str):
+    def __init__(
+        self,
+        id: int,
+        fullName: str,
+        email: str,
+        phone: str,
+        employeeNumber: str,
+    ):
         super().__init__(id, fullName, email, phone)
         self.employeeNumber = employeeNumber
 
-    def register_reader(self, user_manager, fullName: str, email: str, phone: str, address: str):
+    def register_reader(
+        self,
+        user_manager,
+        fullName: str,
+        email: str,
+        phone: str,
+        address: str,
+    ):
         return user_manager.registerReader(fullName, email, phone, address)
 
     def add_book(self, library, book: Book):
         library.addBook(book)
 
-    def edit_book(self, library, bookId: int, title: Optional[str] = None, author: Optional[str] = None,
-                  year: Optional[int] = None, isbn: Optional[str] = None, totalCopies: Optional[int] = None):
+    def edit_book(
+        self,
+        library,
+        bookId: int,
+        title: Optional[str] = None,
+        author: Optional[str] = None,
+        year: Optional[int] = None,
+        isbn: Optional[str] = None,
+        totalCopies: Optional[int] = None,
+    ):
         library.updateBook(bookId, title, author, year, isbn, totalCopies)
 
     def remove_book(self, library, bookId: int):

@@ -36,11 +36,11 @@ class TestLibraryManager(unittest.TestCase):
         mock1 = Mock(spec=Notifier)
         mock2 = Mock(spec=Notifier)
         mock3 = Mock(spec=Notifier)
-        
+
         self.library.attach(mock1)
         self.library.attach(mock2)
         self.library.attach(mock3)
-        
+
         self.assertEqual(len(self.library._notifiers), 3)
         self.assertIn(mock1, self.library._notifiers)
         self.assertIn(mock2, self.library._notifiers)
@@ -49,33 +49,33 @@ class TestLibraryManager(unittest.TestCase):
     def test_detach_observer(self):
         mock1 = Mock(spec=Notifier)
         mock2 = Mock(spec=Notifier)
-        
+
         self.library.attach(mock1)
         self.library.attach(mock2)
         self.library.detach(mock1)
-        
+
         self.assertNotIn(mock1, self.library._notifiers)
         self.assertIn(mock2, self.library._notifiers)
 
     def test_notify_all_observers(self):
         mock1 = Mock(spec=Notifier)
         mock2 = Mock(spec=Notifier)
-        
+
         self.library.attach(mock1)
         self.library.attach(mock2)
-        
+
         self.library.notify('Тестове повідомлення')
-        
+
         mock1.notify.assert_called_once_with('Тестове повідомлення')
         mock2.notify.assert_called_once_with('Тестове повідомлення')
 
     def test_addBook_notifies_observers(self):
         mock_observer = Mock(spec=Notifier)
         self.library.attach(mock_observer)
-        
+
         book = Book(1, 'Нова книга', 'Автор', 2024, 'ISBN-001', 2)
         self.library.addBook(book)
-        
+
         # Виклик notify з повідомленням про додавання
         mock_observer.notify.assert_called()
         call_args = mock_observer.notify.call_args[0][0]
@@ -84,19 +84,19 @@ class TestLibraryManager(unittest.TestCase):
     def test_addBook_adds_to_catalog(self):
         book = Book(1, 'Python 101', 'Автор', 2024, 'ISBN-001', 3)
         self.library.addBook(book)
-        
+
         self.assertIn(book, self.library.catalog.books)
 
     def test_removeBook_notifies_observers(self):
         mock_observer = Mock(spec=Notifier)
         self.library.attach(mock_observer)
-        
+
         book = Book(1, 'Книга', 'Автор', 2024, 'ISBN', 1)
         self.library.addBook(book)
         mock_observer.reset_mock()  # скинути виклики від addBook
-        
+
         self.library.removeBook(1)
-        
+
         mock_observer.notify.assert_called()
         call_args = mock_observer.notify.call_args[0][0]
         self.assertIn('видалена', call_args.lower() or 'removed' in call_args.lower())
@@ -105,10 +105,10 @@ class TestLibraryManager(unittest.TestCase):
         reader = Reader(1, 'Іван', 'ivan@e.com', '+380', 'адреса')
         book = Book(2, 'Книга', 'Автор', 2024, 'ISBN', 2)
         self.library.addBook(book)
-        
+
         initial_copies = book.availableCopies
         borrowing = self.library.processBorrowing(reader, book)
-        
+
         self.assertIsNotNone(borrowing)
         self.assertEqual(book.availableCopies, initial_copies - 1)
         self.assertEqual(borrowing.reader, reader)
@@ -118,21 +118,21 @@ class TestLibraryManager(unittest.TestCase):
         reader = Reader(1, 'Іван', 'ivan@e.com', '+380', 'адреса')
         book = Book(2, 'Книга', 'Автор', 2024, 'ISBN', 0)  # 0 копій
         self.library.addBook(book)
-        
+
         borrowing = self.library.processBorrowing(reader, book)
-        
+
         self.assertIsNone(borrowing)
 
     def test_processReturn_success(self):
         reader = Reader(1, 'Іван', 'ivan@e.com', '+380', 'адреса')
         book = Book(2, 'Книга', 'Автор', 2024, 'ISBN', 1)
         self.library.addBook(book)
-        
+
         borrowing = self.library.processBorrowing(reader, book)
         initial_copies = book.availableCopies
-        
+
         result = self.library.processReturn(borrowing.id)
-        
+
         self.assertTrue(result)
         self.assertEqual(borrowing.status, 'returned')
         self.assertEqual(book.availableCopies, initial_copies + 1)
@@ -144,14 +144,20 @@ class TestLibraryManager(unittest.TestCase):
     def test_getOverdueBorrowings(self):
         reader = Reader(1, 'Іван', 'ivan@e.com', '+380', 'адреса')
         book = Book(2, 'Книга', 'Автор', 2024, 'ISBN', 1)
-        
+
         # Створення видачі з давнішньою датою
         past_date = date.today() - timedelta(days=5)
-        borrowing = Borrowing(1, reader, book, past_date - timedelta(days=10), past_date)
+        borrowing = Borrowing(
+            1,
+            reader,
+            book,
+            past_date - timedelta(days=10),
+            past_date,
+        )
         self.library.borrowings.append(borrowing)
-        
+
         overdue = self.library.getOverdueBorrowings(date.today())
-        
+
         self.assertIn(borrowing, overdue)
 
     def test_searchBooks(self):
@@ -159,9 +165,9 @@ class TestLibraryManager(unittest.TestCase):
         book2 = Book(2, 'Java for Dummies', 'Автор', 2024, 'ISBN2', 1)
         self.library.addBook(book1)
         self.library.addBook(book2)
-        
+
         results = self.library.searchBooks('Python')
-        
+
         self.assertIn(book1, results)
         self.assertNotIn(book2, results)
 
@@ -169,13 +175,13 @@ class TestLibraryManager(unittest.TestCase):
         """Тест 15: updateBook() оновлює параметри книги і викликає notify()."""
         mock_observer = Mock(spec=Notifier)
         self.library.attach(mock_observer)
-        
+
         book = Book(1, 'Стара назва', 'Автор', 2020, 'ISBN', 2)
         self.library.addBook(book)
         mock_observer.reset_mock()
-        
+
         self.library.updateBook(1, title='Нова назва')
-        
+
         self.assertEqual(book.title, 'Нова назва')
         mock_observer.notify.assert_called()
 

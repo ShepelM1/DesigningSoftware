@@ -23,7 +23,13 @@ class TestNotifications(unittest.TestCase):
         book.title = 'Old Book'
         book.id = 5
 
-        bor = Borrowing(1, mock_reader, book, date.today() - timedelta(days=10), date.today() - timedelta(days=1))
+        bor = Borrowing(
+            1,
+            mock_reader,
+            book,
+            date.today() - timedelta(days=10),
+            date.today() - timedelta(days=1),
+        )
         mock_lib.getOverdueBorrowings.return_value = [bor]
 
         scheduler = NotificationScheduler(mock_lib)
@@ -44,7 +50,13 @@ class TestNotifications(unittest.TestCase):
         book.title = 'NoNotify Book'
         book.id = 7
 
-        bor = Borrowing(2, reader, book, date.today() - timedelta(days=5), date.today() - timedelta(days=1))
+        bor = Borrowing(
+            2,
+            reader,
+            book,
+            date.today() - timedelta(days=5),
+            date.today() - timedelta(days=1),
+        )
         mock_lib.getOverdueBorrowings.return_value = [bor]
 
         scheduler = NotificationScheduler(mock_lib)
@@ -74,7 +86,13 @@ class TestNotifications(unittest.TestCase):
         book.title = 'Bad Book'
         book.id = 9
 
-        bor = Borrowing(3, mock_reader, book, date.today() - timedelta(days=4), date.today() - timedelta(days=1))
+        bor = Borrowing(
+            3,
+            mock_reader,
+            book,
+            date.today() - timedelta(days=4),
+            date.today() - timedelta(days=1),
+        )
         mock_lib.getOverdueBorrowings.return_value = [bor]
 
         scheduler = NotificationScheduler(mock_lib)
