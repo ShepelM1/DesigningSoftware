@@ -20,8 +20,7 @@ class TestBorrowing(unittest.TestCase):
         self.assertEqual(b.status, 'active')
         self.assertIsNone(b.returnDate)
         b.markAsReturned()
-        # Зламаний тест: очікування 'active' замість 'returned'
-        self.assertEqual(b.status, 'active') 
+        self.assertEqual(b.status, 'returned')
         self.assertEqual(b.returnDate, date.today())
 
     def test_notification_sendEmail_sets_sentDate(self):
