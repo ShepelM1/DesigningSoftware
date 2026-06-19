@@ -1,14 +1,14 @@
-import unittest
-import sys
 import os
+import sys
+import unittest
 from unittest.mock import Mock
 import io
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from user import UserManager, Reader, Librarian, User
-from book import Book
-from interfaces import Notifier, BorrowingService
+from user import UserManager, Reader  # noqa: E402
+from book import Book  # noqa: E402
+from interfaces import Notifier, BorrowingService  # noqa: E402
 
 
 class TestUser(unittest.TestCase):

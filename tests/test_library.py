@@ -1,16 +1,16 @@
-import unittest
-import sys
 import os
-from unittest.mock import Mock
+import sys
+import unittest
 from datetime import date, timedelta
+from unittest.mock import Mock
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from library import LibraryManager
-from book import Book, Catalog
-from borrowing import Borrowing
-from user import Reader
-from interfaces import Notifier
+from library import LibraryManager  # noqa: E402
+from book import Book  # noqa: E402
+from borrowing import Borrowing  # noqa: E402
+from user import Reader  # noqa: E402
+from interfaces import Notifier  # noqa: E402
 
 
 class TestLibraryManager(unittest.TestCase):

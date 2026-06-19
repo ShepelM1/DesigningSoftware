@@ -1,3 +1,4 @@
+import io
 import unittest
 import sys
 import os
@@ -6,8 +7,8 @@ from datetime import date, timedelta
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from notifications import NotificationScheduler
-from borrowing import Borrowing
+from notifications import NotificationScheduler  # noqa: E402
+from borrowing import Borrowing  # noqa: E402
 
 
 class TestNotifications(unittest.TestCase):
@@ -41,6 +42,7 @@ class TestNotifications(unittest.TestCase):
 
     def test_checkOverdueBooks_reader_without_notify_prints_and_logs(self):
         mock_lib = Mock()
+
         class SimpleReader:
             def __init__(self):
                 self.fullName = 'NoNotify'
@@ -60,7 +62,6 @@ class TestNotifications(unittest.TestCase):
         mock_lib.getOverdueBorrowings.return_value = [bor]
 
         scheduler = NotificationScheduler(mock_lib)
-        import io, sys
         buf = io.StringIO()
         old = sys.stdout
         sys.stdout = buf
@@ -78,8 +79,10 @@ class TestNotifications(unittest.TestCase):
         mock_lib = Mock()
         mock_reader = Mock()
         mock_reader.fullName = 'BadReader'
+
         def raise_exc(msg):
             raise RuntimeError('boom')
+
         mock_reader.notify.side_effect = raise_exc
 
         book = Mock()
@@ -96,7 +99,6 @@ class TestNotifications(unittest.TestCase):
         mock_lib.getOverdueBorrowings.return_value = [bor]
 
         scheduler = NotificationScheduler(mock_lib)
-        import io, sys
         buf = io.StringIO()
         old = sys.stdout
         sys.stdout = buf

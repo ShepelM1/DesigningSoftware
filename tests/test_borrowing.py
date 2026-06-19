@@ -1,12 +1,12 @@
-import unittest
-import sys
 import os
+import sys
+import unittest
 from datetime import date
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from borrowing import Borrowing
-from borrowing import Notification
+from borrowing import Borrowing  # noqa: E402
+from borrowing import Notification  # noqa: E402
 
 
 class TestBorrowing(unittest.TestCase):

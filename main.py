@@ -9,7 +9,7 @@ from datetime import date
 from book import Book
 from library import LibraryManager
 from notifications import EmailAlert
-from user import Reader, Librarian, UserManager
+from user import UserManager
 
 
 def register_notifiers(manager, notifiers):
@@ -75,8 +75,6 @@ def main():
 
     overdue = librarian.track_overdue(library, date.today())
     print(f"Прострочених книг: {len(overdue)}")
-
-
 
 
 if __name__ == "__main__":

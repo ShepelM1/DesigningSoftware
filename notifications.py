@@ -35,6 +35,7 @@ class NotificationScheduler(Notifier):
 
         return messages
 
+
 class EmailAlert(Notifier):
     def __init__(self, email):
         self.email = email

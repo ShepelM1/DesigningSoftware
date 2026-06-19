@@ -1,5 +1,5 @@
 from interfaces import Notifier, BookSearch, BorrowingService
-from datetime import date, timedelta
+from datetime import date
 from book import Catalog, Book
 from user import Reader
 from borrowing import Borrowing

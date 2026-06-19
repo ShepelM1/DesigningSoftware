@@ -1,6 +1,8 @@
-from interfaces import Notifier, BorrowingService
+from interfaces import Notifier
+from interfaces import BorrowingService
 from typing import Optional
 from book import Book
+
 
 class User:
     def __init__(self, id: int, fullName: str, email: str, phone: str):
@@ -8,6 +10,7 @@ class User:
         self.fullName = fullName
         self.email = email
         self.phone = phone
+
 
 class Librarian(User):
     def __init__(
@@ -71,6 +74,7 @@ class UserManager:
         librarian = Librarian(new_id, fullName, email, phone, employeeNumber)
         self.users.append(librarian)
         return librarian
+
 
 class Reader(User, Notifier):
     def __init__(self, id: int, fullName: str, email: str, phone: str, address: str):
